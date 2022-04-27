@@ -1,6 +1,6 @@
 require 'cg/ncautomaton'
 
-__nca = NCAutomation.new(ARGV)
+__nca = NCAutomaton.new(ARGV)
 exit 1 unless __nca.configured
 
 display = Proc.new {
@@ -18,5 +18,5 @@ GLUT.InitWindowSize(*__nca.wsize)
 GLUT.CreateWindow('a')
 GLUT.DisplayFunc(display)
 GLUT.KeyboardFunc(keyboard)
-GLUT.ClearColor(1.0, 1.0, 1.0, 0.0)
+GL.ClearColor(1.0, 1.0, 1.0, 0.0)
 GLUT.MainLoop()
