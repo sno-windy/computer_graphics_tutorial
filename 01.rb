@@ -18,10 +18,10 @@ display = Proc.new {
     GL.Color(1.0,1.0,1.0)
     GL.Vertex(x0,y0); GL.Vertex(x0,y1); GL.Vertex(x1,y1); GL.Vertex(x1,y0)
 
-    GL.Color(0.957,0.165,0.255)
-    MGLUtils.disc([0, 0], W)
+    GL.End()   # 図形プリミティブ(四角形の集合)指定終了
 
-  GL.End()   # 図形プリミティブ(四角形の集合)指定終了
+    GL.Color(0.957,0.165,0.255)
+    MGLUtils.disc([0, 0], W*2/3)
 
   GL.Flush() # 描画強制実行
 }
