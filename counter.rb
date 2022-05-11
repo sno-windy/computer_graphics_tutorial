@@ -9,21 +9,6 @@ require "cg/mglutils"
 ##
 WSIZE = 600  # ウインドウサイズ
 
-R = 0.2      # ランプ(円板)の半径
-M = 0.1      # ランプとランプの間隔，周囲のマージン
-W = 6*R+4*M  # フレームの横幅 1.6
-H = 2*R+2*M  # フレームの高さ 0.6
-D = 2*R+M    # ランプの中心間の距離 0.5
-
-YC = 0.5     # ランプの位置(高さ)
-YT = YC+R+M  # フレームの上端
-YB = YT-H    # フレームの下端
-XL = -W/2    # フレームの左端 -0.8
-XR = XL+W    # フレームの右端 0.8
-XRP = XL+M   # ポールの右端
-YBP = -1.0   # ポールの下端(画面の下端)
-
-
 X1 = -0.3
 X2 = -0.2
 X3 = 0.2
@@ -35,47 +20,52 @@ Y4 = -0.05
 Y5 = -0.45
 Y6 = -0.55
 
-def createRect(isLight, XL, YT, XR, YB)
+def createRect(isLight, xl, yt, xr, yb)
   light = isLight ? 1.0 : 0.2
   GL.Color(light, 0, 0)
-  GL.Rect(XL, YT, XR, YB)
+  GL.Rect(xl, yt, xr, yb)
+end
+
+def createNumber(isL1, isL2, isL3, isL4, isL5, isL6, isL7)
+  createRect(isL1, X2, Y1, X3, Y2)
+  createRect(isL2, X1, Y2, X2, Y3)
+  createRect(isL3, X3, Y2, X4, Y3)
+  createRect(isL4, X2, Y3, X3, Y4)
+  createRect(isL5, X1, Y4, X2, Y5)
+  createRect(isL6, X3, Y4, X4, Y5)
+  createRect(isL7, X2, Y5, X3, Y6)
+end
 
 ##
-## 信号状態変数
-## 0=GREEN,1=YELLOW,2=RED
+## カウンタ状態変数
 ##
-__lamp  = 0
+__number  = 0
 
-### 信号機の描画(描画コールバック) ########
 display = Proc.new {
 
   GL.Clear(GL::COLOR_BUFFER_BIT) # 画面のクリア
 
-  ## フレームとポールを描く
-  GL.Color(0.7,0.7,0.7)  # 色=グレイ
-  GL.Rect(XL,YT,XR,YB)   # フレーム(四角)を描く
-  GL.Rect(XL,YB,XRP,YBP) # ポール(四角)を描く
-
-  ## ランプ(円板)を描く(それぞれ中心，半径を指定)
-  if __lamp == 0
-    ### 緑点灯
-    createRect(false, X2, Y1, X3, Y2)
-    createRect(false, X1, Y2, X2, Y3)
-    createRect(false, X3, Y2, X4, Y3)
-    createRect(false, X2, Y3, X3, Y4)
-    createRect(false, X1, Y4, X2, Y5)
-    createRect(false, X3, Y4, X4, Y5)
-    createRect(false, X2, Y5, X3, Y6)
-  elsif __lamp == 1
-    ### 黄点灯
-    GL.Color(0,0.2,0);     MGLUtils.disc([-D,YC],R) # OFF
-    GL.Color(1.00,1.00,0);   MGLUtils.disc([ 0,YC],R) # ON
-    GL.Color(0.2,0,0);     MGLUtils.disc([ D,YC],R) # OFF
-  else
-    ### 赤点灯
-    GL.Color(0,0.2,0);     MGLUtils.disc([-D,YC],R) # OFF
-    GL.Color(0.2,0.2,0); MGLUtils.disc([ 0,YC],R) # OFF
-    GL.Color(1.00,0,0);      MGLUtils.disc([ D,YC],R) # ON
+  ### カウンタの描画　###
+  if __number == 0
+    createNumber(true, true, true, false, true, true, true)
+  elsif __number == 1
+    createNumber(false, false, true, false, false, true, false)
+  elsif __number == 2
+    createNumber(true, false, true, true, true, false, true)
+  elsif __number == 3
+    createNumber(true, false, true, true, false, true, true)
+  elsif __number == 4
+    createNumber(false, true, true, true, false, true, false)
+  elsif __number == 5
+    createNumber(true, true, false, true, false, true, true)
+  elsif __number == 6
+    createNumber(true, true, false, true, true, true, true)
+  elsif __number == 7
+    createNumber(true, true, true, false, false, true, false)
+  elsif __number == 8
+    createNumber(true, true, true, true, true, true, true)
+  elsif __number == 9
+    createNumber(true, true, true, true, false, true, true)
   end
 
   GL.Flush() # 描画実行
@@ -83,31 +73,12 @@ display = Proc.new {
 
 ### キーボード入力コールバック ########
 keyboard = Proc.new { |key,x,y|
-  # <文字>.ord == その<文字>に対応する番号
-  # 印字できない文字はこのようにして扱う
-  # 印字できる文字でもordで番号と比較できる
-  # 文字の番号はirbを使って「ord」で調べられる
-  # $ irb
-  # irb(main):001:0> 'n'.ord [Enter]
-  # => 110
-  # irb(main):002:0> exit [Enter]
-
-  # [n]か[SPACE]か[TAB]: 信号を順に切替える
-  if key == 'n' or key == ' ' or key.ord == 0x09
-    __lamp = (__lamp + 1) % 3 # 0 -> 1, 1 -> 2, 2 -> 0
-    GLUT.PostRedisplay()      # displayコールバックを(後で適宜)呼び出す．
+  if key == 'h'
+    __number = (__number + 1) % 10
+    GLUT.PostRedisplay()
   # [q]か[ESC]: 終了する
   elsif key == 'q' or key.ord == 0x1b
     exit 0
-  end
-}
-
-#### マウス入力コールバック ########
-mouse = Proc.new { |button,state,x,y|
-  # 左ボタンが押されたら，信号を順に切替える
-  if button == GLUT::LEFT_BUTTON and state == GLUT::DOWN
-    __lamp = (__lamp + 1) % 3 # 0 -> 1, 1 -> 2, 2 -> 0
-    GLUT.PostRedisplay()      # displayコールバックを(後で適宜)呼び出す．
   end
 }
 
