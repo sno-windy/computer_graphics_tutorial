@@ -74,6 +74,9 @@ display = Proc.new {
 ### キーボード入力コールバック ########
 keyboard = Proc.new { |key,x,y|
   if key == 'h'
+    __number = (__number + 9) % 10
+    GLUT.PostRedisplay()
+  if key == 'l'
     __number = (__number + 1) % 10
     GLUT.PostRedisplay()
   # [q]か[ESC]: 終了する
@@ -90,6 +93,5 @@ GLUT.InitWindowSize(WSIZE,WSIZE)    # ウインドウサイズの指定
 GLUT.CreateWindow("Traffic Signal") # ウインドウ作成
 GLUT.DisplayFunc(display)           # 描画コールバックの登録
 GLUT.KeyboardFunc(keyboard)         # キーボード入力コールバックの登録
-GLUT.MouseFunc(mouse)               # マウス入力コールバックの登録
 GL.ClearColor(0.4,0.4,1.0,1.0)      # 背景色の設定
 GLUT.MainLoop()                     # イベントループ開始
