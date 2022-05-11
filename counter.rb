@@ -23,8 +23,28 @@ XR = XL+W    # フレームの右端 0.8
 XRP = XL+M   # ポールの右端
 YBP = -1.0   # ポールの下端(画面の下端)
 
-L_ON  = 1.00 # ランプ点灯状態の明るさ
-L_OFF = 0.5  # ランプ消灯状態の明るさ
+
+X1 = -0.3
+X2 = -0.2
+X3 = 0.2
+X4 = 0.3
+Y1 = 0.55
+Y2 = 0.45
+Y3 = 0.05
+Y4 = -0.05
+Y5 = -0.45
+Y6 = -0.55
+
+L_ON  = GL.Color(1.0, 0, 0)
+L_OFF = GL.Color(0.2, 0, 0)
+
+Rect1 = GL.Rect(X2, Y1, X3, Y2)
+Rect2 = GL.Rect(X1, Y2, X2, Y3)
+Rect3 = GL.Rect(X3, Y2, X4, Y3)
+Rect4 = GL.Rect(X2, Y3, X3, Y4)
+Rect5 = GL.Rect(X1, Y4, X2, Y5)
+Rect6 = GL.Rect(X3, Y4, X4, Y5)
+Rect7 = GL.Rect(X2, Y5, X3, Y6)
 
 ##
 ## 信号状態変数
@@ -44,14 +64,14 @@ display = Proc.new {
 
   ## ランプ(円板)を描く(それぞれ中心，半径を指定)
   if __lamp == 0
-    ### 緑点灯                        XL    YT   XR    YB
-    GL.Color(L_ON,0,0);     GL.Rect(-0.2, 0.55, 0.2, 0.45)
-    GL.Color(L_ON,0,0);     GL.Rect(-0.3, 0.45, -0.2, 0.05)
-    GL.Color(L_ON,0,0);     GL.Rect(0.2, 0.45, 0.3, 0.05)
-    GL.Color(L_ON,0,0);     GL.Rect(-0.2, 0.05, 0.2, -0.05)
-    GL.Color(L_ON,0,0);     GL.Rect(-0.3, -0.05, -0.2, -0.45)
-    GL.Color(L_ON,0,0);     GL.Rect(0.2, -0.05, 0.3, -0.45)
-    GL.Color(L_ON,0,0);     GL.Rect(-0.2, -0.45, 0.2, -0.55)
+    ### 緑点灯
+    L_ON     Rect1
+    L_ON     Rect2
+    L_ON     Rect3
+    L_ON     Rect4
+    L_ON     Rect5
+    L_ON     Rect6
+    L_ON     Rect7
   elsif __lamp == 1
     ### 黄点灯
     GL.Color(0,L_OFF,0);     MGLUtils.disc([-D,YC],R) # OFF
