@@ -35,16 +35,10 @@ Y4 = -0.05
 Y5 = -0.45
 Y6 = -0.55
 
-L_ON  = GL.Color(1.0, 0, 0)
-L_OFF = GL.Color(0.2, 0, 0)
-
-Rect1 = GL.Rect(X2, Y1, X3, Y2)
-Rect2 = GL.Rect(X1, Y2, X2, Y3)
-Rect3 = GL.Rect(X3, Y2, X4, Y3)
-Rect4 = GL.Rect(X2, Y3, X3, Y4)
-Rect5 = GL.Rect(X1, Y4, X2, Y5)
-Rect6 = GL.Rect(X3, Y4, X4, Y5)
-Rect7 = GL.Rect(X2, Y5, X3, Y6)
+def createRect(isLight, XL, YT, XR, YB)
+  light = isLight ? 1.0 : 0.2
+  GL.Color(light, 0, 0)
+  GL.Rect(XL, YT, XR, YB)
 
 ##
 ## 信号状態変数
@@ -65,13 +59,13 @@ display = Proc.new {
   ## ランプ(円板)を描く(それぞれ中心，半径を指定)
   if __lamp == 0
     ### 緑点灯
-    L_ON     Rect1
-    L_ON     Rect2
-    L_ON     Rect3
-    L_ON     Rect4
-    L_ON     Rect5
-    L_ON     Rect6
-    L_ON     Rect7
+    createRect(false, X2, Y1, X3, Y2)
+    createRect(false, X1, Y2, X2, Y3)
+    createRect(false, X3, Y2, X4, Y3)
+    createRect(false, X2, Y3, X3, Y4)
+    createRect(false, X1, Y4, X2, Y5)
+    createRect(false, X3, Y4, X4, Y5)
+    createRect(false, X2, Y5, X3, Y6)
   elsif __lamp == 1
     ### 黄点灯
     GL.Color(0,0.2,0);     MGLUtils.disc([-D,YC],R) # OFF
