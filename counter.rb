@@ -74,14 +74,14 @@ display = Proc.new {
     L_ON     Rect7
   elsif __lamp == 1
     ### 黄点灯
-    GL.Color(0,L_OFF,0);     MGLUtils.disc([-D,YC],R) # OFF
-    GL.Color(L_ON,L_ON,0);   MGLUtils.disc([ 0,YC],R) # ON
-    GL.Color(L_OFF,0,0);     MGLUtils.disc([ D,YC],R) # OFF
+    GL.Color(0,0.2,0);     MGLUtils.disc([-D,YC],R) # OFF
+    GL.Color(1.00,1.00,0);   MGLUtils.disc([ 0,YC],R) # ON
+    GL.Color(0.2,0,0);     MGLUtils.disc([ D,YC],R) # OFF
   else
     ### 赤点灯
-    GL.Color(0,L_OFF,0);     MGLUtils.disc([-D,YC],R) # OFF
-    GL.Color(L_OFF,L_OFF,0); MGLUtils.disc([ 0,YC],R) # OFF
-    GL.Color(L_ON,0,0);      MGLUtils.disc([ D,YC],R) # ON
+    GL.Color(0,0.2,0);     MGLUtils.disc([-D,YC],R) # OFF
+    GL.Color(0.2,0.2,0); MGLUtils.disc([ 0,YC],R) # OFF
+    GL.Color(1.00,0,0);      MGLUtils.disc([ D,YC],R) # ON
   end
 
   GL.Flush() # 描画実行
