@@ -76,7 +76,7 @@ keyboard = Proc.new { |key,x,y|
   if key == 'h'
     __number = (__number + 9) % 10
     GLUT.PostRedisplay()
-  if key == 'l'
+  elsif key == 'l'
     __number = (__number + 1) % 10
     GLUT.PostRedisplay()
   # [q]か[ESC]: 終了する
