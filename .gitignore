@@ -56,3 +56,9 @@ build-iPhoneSimulator/
 # .rubocop-https?--*
 
 *_template.rb
+*Zone.Identifier
+node_modules
+
+bargraph*
+windmill?.rb
+tiles*

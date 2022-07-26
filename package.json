@@ -1,0 +1,12 @@
+{
+  "name": "computer_graphics_tutorial",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/SOTA-HIGAKI/computer_graphics_tutorial.git",
+  "author": "sota <souta0829win7@yahoo.co.jp>",
+  "license": "MIT",
+  "devDependencies": {
+    "@prettier/plugin-ruby": "^3.1.2",
+    "prettier": "^2.6.2"
+  }
+}
