@@ -1,3 +1,20 @@
+# coding: utf-8
+=begin
+
+所属: 理学部
+氏名: 檜垣颯汰
+学生番号: 0500308493
+
+提出が遅れてしまい申し訳ございません。課題06:自由制作です。
+1 : サイコロが振れるプログラム
+2 : t を押すとサイコロを振ることができる。qで終了
+3 : 50点
+4 : 一瞬でも楽しめるプログラムが良いと思い作成した。
+5 : 振られたときにアニメーションがあればなお良いと思う。
+
+=end
+
+# coding: utf-8
 require 'opengl'
 require 'glu'
 require 'glut'
@@ -73,7 +90,7 @@ display = Proc.new {
 
 #### キーボード入力コールバック ########
 keyboard = Proc.new { |key,x,y|
-  if key == 's'
+  if key == 't'
     GLUT.PostRedisplay()
   # [q]か[ESC]の場合は，終了する．
   elsif key == 'q' or key.ord == 0x1b
